@@ -2,198 +2,406 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>엔트리 코딩 워크북 - 데이터 퀴즈대회</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+        :root {
+            --primary-color: #4dabf7;
+            --secondary-color: #ffd43b;
+            --success-color: #51cf66;
+            --danger-color: #ff6b6b;
+            --bg-color: #f8f9fa;
+        }
 
         body {
             font-family: 'Nanum Gothic', sans-serif;
             line-height: 1.6;
             color: #333;
-            background-color: #f0f9ff;
+            background-color: #e7f5ff;
             margin: 0;
-            padding: 20px;
+            padding: 0;
         }
 
-        .container {
+        .workbook-container {
             max-width: 900px;
-            margin: 0 auto;
-            background-color: #ffffff;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 4px solid #fff;
+        }
+
+        /* 최상단 이미지 */
+        .header-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .content-padding {
             padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 4px solid #bee3f8;
         }
 
         header {
             text-align: center;
-            border-bottom: 5px solid #4299e1;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
-        h1 { color: #2b6cb0; font-size: 2.2rem; margin-bottom: 10px; }
-        h2 { color: #2d3748; border-left: 8px solid #48bb78; padding-left: 15px; margin-top: 40px; }
-        h3 { color: #3182ce; background: #ebf8ff; padding: 10px; border-radius: 10px; }
-
-        .info-box {
-            background-color: #fffaf0;
-            border: 2px dashed #ed8936;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
+        header h1 {
+            font-size: 2.5rem;
+            color: #1971c2;
+            margin-bottom: 10px;
         }
-
-        .step-card {
-            background: #fff;
-            border: 2px solid #e2e8f0;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
-            transition: transform 0.2s;
-        }
-
-        .step-card:hover { transform: translateY(-5px); border-color: #63b3ed; }
 
         .badge {
             display: inline-block;
-            background: #4299e1;
-            color: white;
             padding: 5px 15px;
+            background: var(--secondary-color);
             border-radius: 20px;
             font-weight: bold;
-            margin-right: 10px;
+            font-size: 1rem;
+            color: #856404;
         }
 
-        .code-block {
-            background: #f7fafc;
-            border: 1px solid #cbd5e0;
+        /* 섹션 스타일 */
+        h2 {
+            border-left: 8px solid var(--primary-color);
+            padding-left: 15px;
+            color: #212529;
+            margin-top: 40px;
+        }
+
+        .step-box {
+            background: #f1f3f5;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .block-desc {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 15px;
             padding: 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            color: #4a5568;
+            margin: 10px 0;
         }
 
-        .table-design {
+        /* 강조 텍스트 */
+        .highlight-blue { color: #1971c2; font-weight: bold; }
+        .highlight-red { color: #fa5252; font-weight: bold; }
+        .highlight-green { color: #2b8a3e; font-weight: bold; }
+
+        /* 테이블 스타일 */
+        table {
             width: 100%;
             border-collapse: collapse;
             margin: 15px 0;
+            background: white;
         }
 
-        .table-design th, .table-design td {
-            border: 1px solid #cbd5e0;
+        th, td {
+            border: 1px solid #dee2e6;
             padding: 12px;
             text-align: center;
         }
 
-        .table-design th { background-color: #edf2f7; }
+        th { background: #e7f5ff; }
 
-        .highlight { color: #e53e3e; font-weight: bold; }
-        
         .footer {
             text-align: center;
-            margin-top: 50px;
+            padding: 30px;
+            background: #f1f3f5;
+            color: #868e96;
             font-size: 0.9rem;
-            color: #a0aec0;
         }
 
-        @media print {
-            body { background: white; }
-            .container { box-shadow: none; border: 2px solid #ccc; }
+        /* 반응형 설정 */
+        @media (max-width: 600px) {
+            .content-padding { padding: 20px; }
+            header h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <p style="font-size: 1.2rem; font-weight: bold; color: #48bb78;">[신왕초 6학년 코딩 교실]</p>
-        <h1>데이터를 활용한 퀴즈대회 만들기</h1>
-        <p>외부 데이터(Excel)를 불러와서 똑똑한 인공지능 퀴즈 프로그램을 만들어봅시다!</p>
-    </header>
+<div class="workbook-container">
+    <img src="https://hyeokstu14-svg.github.io/aaa/Image.png" alt="수업 배너 이미지" class="header-image">
 
-    <div class="info-box">
-        <strong>💡 오늘의 핵심 개념</strong>
-        <ul>
-            <li><strong>테이블:</strong> 정보를 표 형태로 저장하고 꺼내 쓰는 도구 [cite: 32, 55]</li>
-            <li><strong>변수:</strong> 퀴즈 번호나 선택한 정답을 기억하는 주머니 [cite: 10]</li>
-            <li><strong>신호:</strong> 오브젝트끼리 "이제 문제 내!"라고 대화하는 방법 [cite: 11, 17]</li>
-        </ul>
-    </div>
+    <div class="content-padding">
+        <header>
+            <span class="badge">신왕초등학교 6학년 실습</span>
+            <h1>데이터를 활용한 퀴즈대회</h1>
+            <p>우리 함께 똑똑한 인공지능 퀴즈 프로그램을 만들어볼까요?</p>
+        </header>
 
-    <h2>STEP 1. 데이터와 변수 준비하기</h2>
-    <div class="step-card">
-        <p><span class="badge">1</span> 엔트리의 [속성] 탭에서 아래의 변수 2개를 만듭니다.</p>
-        <table class="table-design">
-            <tr>
-                <th>변수 이름</th>
-                <th>기본값</th>
-                <th>용도</th>
-            </tr>
-            <tr>
-                <td><strong>퀴즈번호</strong></td>
-                <td>2</td>
-                <td>현재 몇 번째 문제를 풀고 있는지 기억해요 [cite: 10, 19]</td>
-            </tr>
-            <tr>
-                <td><strong>선택한번호</strong></td>
-                <td>0</td>
-                <td>사용자가 클릭한 정답 번호를 저장해요 [cite: 10, 20]</td>
-            </tr>
-        </table>
-        <p><span class="badge">2</span> [신호] 탭에서 <strong>'문제시작'</strong>과 <strong>'정답확인'</strong> 신호를 추가하세요. [cite: 16, 17]</p>
-    </div>
-
-    <h2>STEP 2. 문제와 보기 보여주기 (데이터 연동)</h2>
-    <p>테이블에 저장된 내용을 화면에 글쓰기 블록으로 나타냅니다.</p>
-    
-    <div class="step-card">
-        <h3>1. 문제 입력창 코딩</h3>
-        <div class="code-block">
-            [문제시작] 신호를 받았을 때:<br>
-            ▶ "테이블 [퀴즈목록]의 (퀴즈번호) 번째 행의 [문제]"를 글쓰기 [cite: 91, 95]
+        <h2>1. 문제 분석하기 (데이터 구조)</h2>
+        <div class="step-box">
+            <p>퀴즈 앱을 만들기 위해 필요한 <strong>변수</strong>들을 확인해봅시다. [cite: 10]</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>변수 이름</th>
+                        <th>기본값</th>
+                        <th>설명</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="highlight-blue">퀴즈번호</td>
+                        <td>2</td>
+                        <td>현재 몇 번째 문제를 풀고 있는지 숫자로 저장해요. [cite: 3, 10]</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight-blue">선택한번호</td>
+                        <td>0</td>
+                        <td>사용자가 누른 정답 번호를 기억해요. [cite: 4, 10]</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </div>
 
-    <div class="step-card">
-        <h3>2. 보기(1, 2, 3) 오브젝트 코딩</h3>
-        <p>각 보기 버튼을 클릭하면 내가 몇 번을 골랐는지 저장해야 합니다.</p>
-        <div class="code-block">
-            [오브젝트를 클릭했을 때]:<br>
-            ▶ (선택한번호)를 <span class="highlight">3</span>으로 정하기 [cite: 40, 41]<br>
-            ▶ [정답확인] 신호 보내기 [cite: 42]
+        <h2>2. 코딩 핵심 포인트 (알고리즘)</h2>
+        
+        <div class="step-box">
+            <h3 class="highlight-green">🎯 문제 시작 신호</h3>
+            <p>프로그램이 시작되면 테이블에서 데이터를 가져와 화면에 보여줍니다. [cite: 30, 90]</p>
+            <div class="block-desc">
+                - <strong>문제입력창:</strong> 테이블의 <span class="highlight-blue">퀴즈번호</span> 번째 행에 있는 문제를 가져와요. [cite: 95]<br>
+                - <strong>보기1~3:</strong> 테이블의 각 행에서 보기 내용을 가져와서 글을 써요. [cite: 32, 55, 72]
+            </div>
         </div>
-        <p style="font-size: 0.9rem; color: #718096;">* 보기1은 1로, 보기2는 2로 각각 숫자를 다르게 정해줘야 해요! [cite: 62, 80]</p>
-    </div>
 
-    <h2>STEP 3. 정답인지 오답인지 판단하기</h2>
-    <p>가장 복잡하지만 가장 중요한 '출제자' 오브젝트의 핵심 로직입니다.</p>
-
-    <div class="step-card">
-        <div class="code-block" style="background-color: #fffaf0; line-height: 2;">
-            [정답확인] 신호를 받았을 때: [cite: 102]<br>
-            만일 <span class="highlight">(선택한번호) == (테이블의 정답 번호)</span> 라면? [cite: 45, 103]<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;✅ "정답입니다!" 2초간 말하기 [cite: 109]<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;만일 (퀴즈번호)가 마지막 번호라면? [cite: 110, 111]<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🏆 "모든 문제를 다 풀었습니다!" 말하기 [cite: 114]<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;아니면:<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;➕ (퀴즈번호)에 1만큼 더하기 [cite: 126]<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📢 [문제시작] 신호 보내기 [cite: 127]<br>
-            아니면:<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;❌ "틀렸습니다" 말하기 + 오답 소리 재생 [cite: 129, 130]
+        <div class="step-box">
+            <h3 class="highlight-red">✅ 정답 확인 신호</h3>
+            <p>학생이 보기를 클릭하면 다음과 같은 순서로 판단해요. [cite: 44, 102]</p>
+            <div class="block-desc">
+                1. <strong>만일</strong> <span class="highlight-blue">선택한번호</span>가 정답과 같다면? [cite: 44, 103]<br>
+                &nbsp;&nbsp;&nbsp;- 정답 소리를 내고 "정답입니다"라고 말해요. [cite: 106, 109]<br>
+                &nbsp;&nbsp;&nbsp;- 다음 문제로 넘어가기 위해 <span class="highlight-blue">퀴즈번호</span>에 1을 더해요. [cite: 44, 126]<br>
+                2. <strong>아니면</strong> (틀렸다면?)<br>
+                &nbsp;&nbsp;&nbsp;- 오답 소리를 내고 "틀렸습니다"라고 말해요. [cite: 129, 130]
+            </div>
         </div>
-    </div>
 
-    <h2>🚀 도전 과제!</h2>
-    <div class="info-box" style="border-color: #48bb78;">
-        <ul>
-            <li>문제를 맞혔을 때만 다음 문제로 넘어가게 하려면 코드를 어떻게 고쳐야 할까요? [cite: 45]</li>
-            <li>나만의 재미있는 퀴즈 데이터를 엑셀(csv)로 만들어 엔트리에 추가해 보세요!</li>
-        </ul>
+        <h2>3. 주의할 점!</h2>
+        <div class="block-desc" style="border-left: 5px solid var(--danger-color);">
+            <ul>
+                <li><strong>신호 보내기:</strong> 오브젝트를 클릭했을 때 <span class="highlight-red">정답확인</span> 신호를 꼭 보내야 해요! [cite: 42, 65, 83]</li>
+                <li><strong>테이블 연결:</strong> <code>퀴즈목록.xlsx</code> 파일이 제대로 연결되어 있는지 확인하세요. [cite: 32, 72]</li>
+                <li><strong>종료 조건:</strong> 마지막 문제까지 다 풀었을 때 "모든 문제를 다 풀었습니다"라고 나오는지 확인해봐요. [cite: 44, 114]</li>
+            </ul>
+        </div>
     </div>
 
     <div class="footer">
-        2026. 02. 11. 신왕초등학교 6학년 데이터 코딩 수업 자료 [cite: 1, 2]
+        &copy; 2026 엔트리 데이터 퀴즈 수업 - 신왕초등학교 6학년 워크북
+    </div>
+</div>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엔트리 코딩 워크북 - 데이터 퀴즈대회</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+        :root {
+            --primary-color: #4dabf7;
+            --secondary-color: #ffd43b;
+            --success-color: #51cf66;
+            --danger-color: #ff6b6b;
+            --bg-color: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #e7f5ff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .workbook-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 4px solid #fff;
+        }
+
+        /* 최상단 이미지 */
+        .header-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .content-padding {
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #1971c2;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--secondary-color);
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1rem;
+            color: #856404;
+        }
+
+        /* 섹션 스타일 */
+        h2 {
+            border-left: 8px solid var(--primary-color);
+            padding-left: 15px;
+            color: #212529;
+            margin-top: 40px;
+        }
+
+        .step-box {
+            background: #f1f3f5;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .block-desc {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        /* 강조 텍스트 */
+        .highlight-blue { color: #1971c2; font-weight: bold; }
+        .highlight-red { color: #fa5252; font-weight: bold; }
+        .highlight-green { color: #2b8a3e; font-weight: bold; }
+
+        /* 테이블 스타일 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th { background: #e7f5ff; }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f1f3f5;
+            color: #868e96;
+            font-size: 0.9rem;
+        }
+
+        /* 반응형 설정 */
+        @media (max-width: 600px) {
+            .content-padding { padding: 20px; }
+            header h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="workbook-container">
+    <img src="https://hyeokstu14-svg.github.io/aaa/Image.png" alt="수업 배너 이미지" class="header-image">
+
+    <div class="content-padding">
+        <header>
+            <span class="badge">신왕초등학교 6학년 실습</span>
+            <h1>데이터를 활용한 퀴즈대회</h1>
+            <p>우리 함께 똑똑한 인공지능 퀴즈 프로그램을 만들어볼까요?</p>
+        </header>
+
+        <h2>1. 문제 분석하기 (데이터 구조)</h2>
+        <div class="step-box">
+            <p>퀴즈 앱을 만들기 위해 필요한 <strong>변수</strong>들을 확인해봅시다. [cite: 10]</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>변수 이름</th>
+                        <th>기본값</th>
+                        <th>설명</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="highlight-blue">퀴즈번호</td>
+                        <td>2</td>
+                        <td>현재 몇 번째 문제를 풀고 있는지 숫자로 저장해요. [cite: 3, 10]</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight-blue">선택한번호</td>
+                        <td>0</td>
+                        <td>사용자가 누른 정답 번호를 기억해요. [cite: 4, 10]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>2. 코딩 핵심 포인트 (알고리즘)</h2>
+        
+        <div class="step-box">
+            <h3 class="highlight-green">🎯 문제 시작 신호</h3>
+            <p>프로그램이 시작되면 테이블에서 데이터를 가져와 화면에 보여줍니다. [cite: 30, 90]</p>
+            <div class="block-desc">
+                - <strong>문제입력창:</strong> 테이블의 <span class="highlight-blue">퀴즈번호</span> 번째 행에 있는 문제를 가져와요. [cite: 95]<br>
+                - <strong>보기1~3:</strong> 테이블의 각 행에서 보기 내용을 가져와서 글을 써요. [cite: 32, 55, 72]
+            </div>
+        </div>
+
+        <div class="step-box">
+            <h3 class="highlight-red">✅ 정답 확인 신호</h3>
+            <p>학생이 보기를 클릭하면 다음과 같은 순서로 판단해요. [cite: 44, 102]</p>
+            <div class="block-desc">
+                1. <strong>만일</strong> <span class="highlight-blue">선택한번호</span>가 정답과 같다면? [cite: 44, 103]<br>
+                &nbsp;&nbsp;&nbsp;- 정답 소리를 내고 "정답입니다"라고 말해요. [cite: 106, 109]<br>
+                &nbsp;&nbsp;&nbsp;- 다음 문제로 넘어가기 위해 <span class="highlight-blue">퀴즈번호</span>에 1을 더해요. [cite: 44, 126]<br>
+                2. <strong>아니면</strong> (틀렸다면?)<br>
+                &nbsp;&nbsp;&nbsp;- 오답 소리를 내고 "틀렸습니다"라고 말해요. [cite: 129, 130]
+            </div>
+        </div>
+
+        <h2>3. 주의할 점!</h2>
+        <div class="block-desc" style="border-left: 5px solid var(--danger-color);">
+            <ul>
+                <li><strong>신호 보내기:</strong> 오브젝트를 클릭했을 때 <span class="highlight-red">정답확인</span> 신호를 꼭 보내야 해요! [cite: 42, 65, 83]</li>
+                <li><strong>테이블 연결:</strong> <code>퀴즈목록.xlsx</code> 파일이 제대로 연결되어 있는지 확인하세요. [cite: 32, 72]</li>
+                <li><strong>종료 조건:</strong> 마지막 문제까지 다 풀었을 때 "모든 문제를 다 풀었습니다"라고 나오는지 확인해봐요. [cite: 44, 114]</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2026 엔트리 데이터 퀴즈 수업 - 신왕초등학교 6학년 워크북
     </div>
 </div>
 
