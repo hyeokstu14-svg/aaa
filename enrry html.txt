@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>엔트리 코딩 워크북 - 데이터 퀴즈대회</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f0f9ff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 4px solid #bee3f8;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 5px solid #4299e1;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 { color: #2b6cb0; font-size: 2.2rem; margin-bottom: 10px; }
+        h2 { color: #2d3748; border-left: 8px solid #48bb78; padding-left: 15px; margin-top: 40px; }
+        h3 { color: #3182ce; background: #ebf8ff; padding: 10px; border-radius: 10px; }
+
+        .info-box {
+            background-color: #fffaf0;
+            border: 2px dashed #ed8936;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .step-card {
+            background: #fff;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .step-card:hover { transform: translateY(-5px); border-color: #63b3ed; }
+
+        .badge {
+            display: inline-block;
+            background: #4299e1;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .code-block {
+            background: #f7fafc;
+            border: 1px solid #cbd5e0;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: #4a5568;
+        }
+
+        .table-design {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .table-design th, .table-design td {
+            border: 1px solid #cbd5e0;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .table-design th { background-color: #edf2f7; }
+
+        .highlight { color: #e53e3e; font-weight: bold; }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #a0aec0;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; border: 2px solid #ccc; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <p style="font-size: 1.2rem; font-weight: bold; color: #48bb78;">[신왕초 6학년 코딩 교실]</p>
+        <h1>데이터를 활용한 퀴즈대회 만들기</h1>
+        <p>외부 데이터(Excel)를 불러와서 똑똑한 인공지능 퀴즈 프로그램을 만들어봅시다!</p>
+    </header>
+
+    <div class="info-box">
+        <strong>💡 오늘의 핵심 개념</strong>
+        <ul>
+            <li><strong>테이블:</strong> 정보를 표 형태로 저장하고 꺼내 쓰는 도구 [cite: 32, 55]</li>
+            <li><strong>변수:</strong> 퀴즈 번호나 선택한 정답을 기억하는 주머니 [cite: 10]</li>
+            <li><strong>신호:</strong> 오브젝트끼리 "이제 문제 내!"라고 대화하는 방법 [cite: 11, 17]</li>
+        </ul>
+    </div>
+
+    <h2>STEP 1. 데이터와 변수 준비하기</h2>
+    <div class="step-card">
+        <p><span class="badge">1</span> 엔트리의 [속성] 탭에서 아래의 변수 2개를 만듭니다.</p>
+        <table class="table-design">
+            <tr>
+                <th>변수 이름</th>
+                <th>기본값</th>
+                <th>용도</th>
+            </tr>
+            <tr>
+                <td><strong>퀴즈번호</strong></td>
+                <td>2</td>
+                <td>현재 몇 번째 문제를 풀고 있는지 기억해요 [cite: 10, 19]</td>
+            </tr>
+            <tr>
+                <td><strong>선택한번호</strong></td>
+                <td>0</td>
+                <td>사용자가 클릭한 정답 번호를 저장해요 [cite: 10, 20]</td>
+            </tr>
+        </table>
+        <p><span class="badge">2</span> [신호] 탭에서 <strong>'문제시작'</strong>과 <strong>'정답확인'</strong> 신호를 추가하세요. [cite: 16, 17]</p>
+    </div>
+
+    <h2>STEP 2. 문제와 보기 보여주기 (데이터 연동)</h2>
+    <p>테이블에 저장된 내용을 화면에 글쓰기 블록으로 나타냅니다.</p>
+    
+    <div class="step-card">
+        <h3>1. 문제 입력창 코딩</h3>
+        <div class="code-block">
+            [문제시작] 신호를 받았을 때:<br>
+            ▶ "테이블 [퀴즈목록]의 (퀴즈번호) 번째 행의 [문제]"를 글쓰기 [cite: 91, 95]
+        </div>
+    </div>
+
+    <div class="step-card">
+        <h3>2. 보기(1, 2, 3) 오브젝트 코딩</h3>
+        <p>각 보기 버튼을 클릭하면 내가 몇 번을 골랐는지 저장해야 합니다.</p>
+        <div class="code-block">
+            [오브젝트를 클릭했을 때]:<br>
+            ▶ (선택한번호)를 <span class="highlight">3</span>으로 정하기 [cite: 40, 41]<br>
+            ▶ [정답확인] 신호 보내기 [cite: 42]
+        </div>
+        <p style="font-size: 0.9rem; color: #718096;">* 보기1은 1로, 보기2는 2로 각각 숫자를 다르게 정해줘야 해요! [cite: 62, 80]</p>
+    </div>
+
+    <h2>STEP 3. 정답인지 오답인지 판단하기</h2>
+    <p>가장 복잡하지만 가장 중요한 '출제자' 오브젝트의 핵심 로직입니다.</p>
+
+    <div class="step-card">
+        <div class="code-block" style="background-color: #fffaf0; line-height: 2;">
+            [정답확인] 신호를 받았을 때: [cite: 102]<br>
+            만일 <span class="highlight">(선택한번호) == (테이블의 정답 번호)</span> 라면? [cite: 45, 103]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;✅ "정답입니다!" 2초간 말하기 [cite: 109]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;만일 (퀴즈번호)가 마지막 번호라면? [cite: 110, 111]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🏆 "모든 문제를 다 풀었습니다!" 말하기 [cite: 114]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;아니면:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;➕ (퀴즈번호)에 1만큼 더하기 [cite: 126]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📢 [문제시작] 신호 보내기 [cite: 127]<br>
+            아니면:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;❌ "틀렸습니다" 말하기 + 오답 소리 재생 [cite: 129, 130]
+        </div>
+    </div>
+
+    <h2>🚀 도전 과제!</h2>
+    <div class="info-box" style="border-color: #48bb78;">
+        <ul>
+            <li>문제를 맞혔을 때만 다음 문제로 넘어가게 하려면 코드를 어떻게 고쳐야 할까요? [cite: 45]</li>
+            <li>나만의 재미있는 퀴즈 데이터를 엑셀(csv)로 만들어 엔트리에 추가해 보세요!</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        2026. 02. 11. 신왕초등학교 6학년 데이터 코딩 수업 자료 [cite: 1, 2]
+    </div>
+</div>
+
+</body>
+</html>
